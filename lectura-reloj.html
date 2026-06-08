@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taller de Relojes: Analógico y Digital - MatesEnRuta</title>
+    <style>
+        :root {
+            --bg-color: #f3e8ff; /* Púrpura muy suave */
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #475569;
+            --primary: #a855f7;    /* Púrpura vibrante */
+            --secondary: #c084fc;
+            --correct: #10b981;
+            --incorrect: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        .header-nav {
+            background-color: var(--card-bg);
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9d5ff;
+            margin-bottom: 20px;
+        }
+
+        .btn-back {
+            font-size: 10pt;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #ffffff;
+            padding: 25px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .hero-banner h1 { font-size: 18pt; margin-bottom: 6px; }
+        .hero-banner p { font-size: 10.5pt; opacity: 0.9; }
+
+        .activity-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 22px;
+            border: 2px solid #e9d5ff;
+            max-width: 750px;
+            margin: 0 auto 30px auto;
+        }
+
+        .activity-card h3 {
+            font-size: 13pt;
+            color: var(--primary);
+            margin-bottom: 15px;
+            border-bottom: 2px dashed #e9d5ff;
+            padding-bottom: 8px;
+        }
+
+        .challenge-block {
+            background-color: #fdfcff;
+            border: 1px solid #f3e8ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .challenge-text {
+            font-size: 11pt;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        /* --- RELOJ ANALÓGICO CSS --- */
+        .clock-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .analog-clock {
+            width: 120px;
+            height: 120px;
+            border: 4px solid #475569;
+            border-radius: 50%;
+            position: relative;
+            background: #ffffff;
+        }
+
+        /* Centro del reloj */
+        .analog-clock::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #1e293b;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+
+        /* Marcas horarias básicas (12, 3, 6, 9) */
+        .mark { position: absolute; font-size: 8pt; font-weight: bold; color: #64748b; }
+        .m12 { top: 2px; left: 50%; transform: translateX(-50%); }
+        .m3  { right: 4px; top: 50%; transform: translateY(-50%); }
+        .m6  { bottom: 2px; left: 50%; transform: translateX(-50%); }
+        .m9  { left: 4px; top: 50%; transform: translateY(-50%); }
+
+        /* Agujas */
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            border-radius: 4px;
+        }
+        .hour-hand {
+            width: 4px;
+            height: 30px;
+            background-color: #1e293b;
+            z-index: 5;
+        }
+        .minute-hand {
+            width: 3px;
+            height: 45px;
+            background-color: #a855f7;
+            z-index: 4;
+        }
+
+        /* --- CONTROLES DE RESPUESTA --- */
+        .digital-input-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .digital-input-group input {
+            width: 65px;
+            padding: 8px;
+            font-size: 12pt;
+            text-align: center;
+            font-weight: bold;
+            border: 2px solid #cbd5e1;
+            border-radius: 6px;
+            background: #f8fafc;
+        }
+
+        .digital-clock-display {
+            background: #1e293b;
+            color: #38bdf8;
+            font-family: monospace;
+            font
