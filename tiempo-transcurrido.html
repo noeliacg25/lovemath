@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retos Aleatorios: Tiempo Transcurrido - MatesEnRuta</title>
+    <style>
+        :root {
+            --bg-color: #f0fdf4;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --primary: #16a34a;
+            --secondary: #22c55e;
+            --correct: #10b981;
+            --incorrect: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        .header-nav {
+            background-color: var(--card-bg);
+            padding: 12px 15px;
+            border-bottom: 1px solid #bbf7d0;
+            margin-bottom: 20px;
+        }
+
+        .btn-back {
+            font-size: 10pt;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #ffffff;
+            padding: 25px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .hero-banner h1 { font-size: 18pt; margin-bottom: 6px; }
+        .hero-banner p { font-size: 10.5pt; opacity: 0.9; }
+
+        .activity-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 22px;
+            border: 2px solid #bbf7d0;
+            max-width: 750px;
+            margin: 0 auto 30px auto;
+        }
+
+        .activity-card h3 {
+            font-size: 13pt;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            border-bottom: 2px dashed #cbd5e1;
+            padding-bottom: 8px;
+        }
+
+        .timeline-block {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 18px;
+        }
+
+        .event-title {
+            font-size: 11pt;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .time-badge-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 12px;
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #f1f5f9;
+        }
+
+        .time-badge {
+            background-color: #e2e8f0;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 11pt;
+            font-weight: bold;
+            color: #334155;
+        }
+
+        .time-arrow { color: #94a3b8; font-weight: bold; }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 5px;
+        }
+
+        .input-row input {
+            width: 75px;
+            padding: 6px;
+            font-size: 10pt;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .input-row span {
+            font-size: 10pt;
+            font-weight: bold;
+            color: var(--text-muted);
+            margin-right: 10px;
+        }
+
+        .timeline-block.correct { border-left: 6px solid var(--correct); background-color: #f0fdf4; }
+        .timeline-block.incorrect { border-left: 6px solid var(--incorrect); background-color: #fef2f2; }
+
+        .feed-msg { font-size: 9.5pt; font-weight: bold; margin-top: 8px; display: none; }
+        .correct .feed-msg { display: block; color: var(--correct); }
+        .incorrect .feed-msg { display: block; color: var(--incorrect); }
+
+        .btn-check, .btn-reload {
+            width: 100%;
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 12pt;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-check { background-color: var(--primary); box-shadow: 0 4px 6px rgba(22, 163, 74, 0.15); }
+        .btn-check:hover { background-color: #15803d; }
+        
+        .btn-reload { background-color: #3b82f6; display: none; margin-top: 15px; }
+        .btn-reload:hover { background-color: #2563eb; }
+
+        .score-board {
+            display: none;
+            background-color: #1e293b;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-nav">
+        <a href="tiempo.html" class="btn-back">← Volver al Menú de Tiempo</a>
+    </div>
+
+    <div class="hero-banner">
+        <h1>⏱️ El Generador de Tiempos Aleatorios</h1>
+        <p>¡Cada intento es una misión diferente! Resuelve los 5 retos elegidos al azar para hoy.</p>
+    </div>
+
+    <div class="activity-card">
+        <h3>📝 Calcula el Tiempo Transcurrido</h3>
+        <p style="font-size: 9.5pt; color: var(--text-muted); margin-bottom: 15px;">Pon las horas y minutos exactos que pasan entre el inicio y el final de cada tarjeta.</p>
+        
+        <form id="elapsedForm" onsubmit="evaluateGame(event)">
+            <div id="questionsContainer"></div>
+
+            <button type="submit" class="btn-check" id="submitBtn">🎯 Comprobar mis soluciones</button>
+        </form>
+
+        <button class="btn-reload" id="reloadBtn" onclick="initGame()">🔄 Generar nuevos ejercicios al azar</button>
+
+        <div class="score-board" id="scorePanel">
+            <h4 style="font-size: 14pt;">📊 Tu Registro de Tiempos</h4>
+            <div style="font-size: 26pt; font-weight: 800; color: #4ade80; margin: 8px 0;" id="scoreVal">0 / 5</div>
+            <p id="scoreMsg" style="font-size: 10.5pt; opacity: 0.9;"></p>
+        </div>
+    </div>
+
+    <script>
+        // BANCO DE DATOS: 15 Problemas variados con diferentes niveles de complejidad
+        const poolDeProblemas = [
+            { titulo: "🏕️ Excursión en la Naturaleza", inicio: "09:00", fin: "13:00", ansH: 4, ansM: 0, feed: "¡Correcto! De 09:00 a 13:00 van exactamente 4 horas enteras." },
+            { titulo: "🥞 Tiempo de Desayuno", inicio: "08:15", fin: "08:45", ansH: 0, ansM: 30, feed: "¡Excelente! Permanecen en la misma hora, han pasado 30 minutos." },
+            { titulo: "📚 Clase de Matemáticas", inicio: "11:10", fin: "12:55", ansH: 1, ansM: 45, feed: "¡Muy bien! De 11:10 a 12:10 va 1 hora, y de 10 a 55 van 45 minutos." },
+            { titulo: " skateboard🛹 Entrenamiento en el Skatepark", inicio: "16:40", fin: "18:10", ansH: 1, ansM: 30, feed: "¡Perfecto! De 16:40 a 17:00 son 20 min, y hasta las 18:10 pasa una hora extra." },
+            { titulo: "✈️ Vuelo en Avión", inicio: "14:25", fin: "17:50", ansH: 3, ansM: 25, feed: "¡Logrado! De 14:25 a 17:25 pasan 3 horas, más 25 minutos de diferencia." },
+            { titulo: "🎭 Obra de Teatro escolar", inicio: "18:50", fin: "20:15", ansH: 1, ansM: 25, feed: "¡Increíble! De 18:50 a 19:50 va 1 hora, y para llegar a las 20:15 sumamos 25 minutos." },
+            { titulo: "💻 Sesión de Videojuegos", inicio: "17:35", fin: "19:00", ansH: 1, ansM: 25, feed: "¡Muy bien! Faltan 25 minutos para las 18:00 y luego 1 hora completa hasta las 19:00." },
+            { titulo: "🏊 Práctica de Natación", inicio: "16:15", fin: "17:30", ansH: 1, ansM: 15, feed: "¡Exacto! 1 hora completa nos lleva a las 17:15, y sumamos 15 minutos más." },
+            { titulo: "🎈 Fiesta de Cumpleaños", inicio: "17:00", fin: "19:45", ansH: 2, ansM: 45, feed: "¡Correcto! Pasan 2 horas completas (19:00) y 45 minutos de resto." },
+            { titulo: "🍕 Horneado de Pizza", inicio: "20:45", fin: "21:10", ansH: 0, ansM: 25, feed: "¡Perfecto! Solo han transcurrido 25 minutos para cruzar la hora en punto." },
+            { titulo: "🏃 Carrera Popular de Atletismo", inicio: "10:05", fin: "11:20", ansH: 1, ansM: 15, feed: "¡Buen cálculo! 1 hora te sitúa en las 11:05, más 15 minutos adicionales." },
+            { titulo: "🎨 Taller de Pintura Creativa", inicio: "16:30", fin: "18:45", ansH: 2, ansM: 15, feed: "¡Excelente! De 16:30 a 18:30 transcurren 2 horas exactas, más 15 minutos." },
+            { titulo: "🚲 Paseo Ciclista Familiar", inicio: "10:15", fin: "12:30", ansH: 2, ansM: 15, feed: "¡Brillante! De 10:15 a 12:15 pasan dos horas, más el cuarto de hora extra." },
+            { titulo: "🍿 Película en la Televisión", inicio: "21:40", fin: "23:15", ansH: 1, ansM: 35, feed: "¡Conseguido! De 21:40 a 22:40 va una hora. De 22:40 a 23:15 pasan 35 minutos." },
+            { titulo: "🧼 Tareas del Hogar Organizadas", inicio: "09:55", fin: "11:05", ansH: 1, ansM: 10, feed: "¡Gran trabajo! Faltan 5 minutos para las 10, más 1 hora y 5 minutos adicionales." }
+        ];
+
+        let problemasSeleccionados = [];
+
+        // Función para mezclar y seleccionar 5 problemas únicos
+        function initGame() {
+            // Ocultar paneles de notas anteriores
+            document.getElementById("scorePanel").style.display = "none";
+            document.getElementById("reloadBtn").style.display = "none";
+            document.getElementById("submitBtn").style.display = "block";
+
+            // Mezclar el array utilizando el algoritmo de Fisher-Yates
+            let copiaPool = [...poolDeProblemas];
+            for (let i = copiaPool.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copiaPool[i], copiaPool[j]] = [copiaPool[j], copiaPool[i]];
+            }
+
+            // Guardar los primeros 5 problemas sin repetición
+            problemasSeleccionados = copiaPool.slice(0, 5);
+
+            // Inyectar el código HTML en la vista
+            const container = document.getElementById("questionsContainer");
+            container.innerHTML = "";
+
+            problemasSeleccionados.forEach((prob, index) => {
+                container.innerHTML += `
+                    <div class="timeline-block" id="block_${index}">
+                        <div class="event-title">${index + 1}. ${prob.titulo}</div>
+                        <div class="time-badge-container">
+                            <span>Inicio:</span> <span class="time-badge">${prob.inicio}</span>
+                            <span class="time-arrow">➡️</span>
+                            <span>Fin:</span> <span class="time-badge">${prob.fin}</span>
+                        </div>
+                        <div class="input-row">
+                            <input type="number" id="h_${index}" min="0" required> <span>horas</span>
+                            <input type="number" id="m_${index}" min="0" max="59" required> <span>minutos</span>
+                        </div>
+                        <div class="feed-msg" id="feed_${index}"></div>
+                    </div>
+                `;
+            });
+        }
+
+        // Función para corregir la tanda de ejercicios
+        function evaluateGame(event) {
+            event.preventDefault();
+            let points = 0;
+
+            problemasSeleccionados.forEach((prob, index) => {
+                const userH = parseInt(document.getElementById(`h_${index}`).value) || 0;
+                const userM = parseInt(document.getElementById(`m_${index}`).value) || 0;
+                const blockElement = document.getElementById(`block_${index}`);
+                const feedElement = document.getElementById(`feed_${index}`);
+
+                blockElement.classList.remove("correct", "incorrect");
+
+                if (userH === prob.ansH && userM === prob.ansM) {
+                    points++;
+                    blockElement.classList.add("correct");
+                    feedElement.innerText = "✅ " + prob.feed;
+                } else {
+                    blockElement.classList.add("incorrect");
+                    feedElement.innerText = "❌ Incorrecto. Vuelve a calcular el paso del tiempo analizando las horas del marcador.";
+                }
+            });
+
+            // Mostrar el cuadro de notas finales
+            const panel = document.getElementById("scorePanel");
+            panel.style.display = "block";
+            document.getElementById("scoreVal").innerText = points + " / 5";
+
+            const msgBox = document.getElementById("scoreMsg");
+            if (points === 5) {
+                msgBox.innerText = "¡Espectacular! Has completado la ronda sin ningún fallo. ¡Eres inmune al desorden del reloj! 🏆✨";
+            } else if (points >= 3) {
+                msgBox.innerText = "¡Buen trabajo! Has superado con éxito la mayoría de los retos del azar. Repasa los marcados en rojo.";
+            } else {
+                msgBox.innerText = "¡No te preocupes! Esta tanda tenía trampas difíciles. Dale al botón azul de abajo y prueba con otra combinación.";
+            }
+
+            // Mostrar el botón para volver a generar una tanda limpia al azar
+            document.getElementById("reloadBtn").style.display = "block";
+            document.getElementById("submitBtn").style.display = "none";
+
+            panel.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Arrancar el juego al azar en cuanto se abra la página
+        window.onload = initGame;
+    </script>
+</body>
+</html>
