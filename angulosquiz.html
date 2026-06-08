@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Ángulos - MatesEnRuta</title>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --primary: #4f46e5;
+            --correct: #10b981;
+            --incorrect: #ef4444;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.4; }
+        .header-nav { background-color: var(--card-bg); padding: 12px 15px; border-bottom: 1px solid #e2e8f0; margin-bottom: 20px; }
+        .btn-back { font-size: 10pt; color: var(--primary); text-decoration: none; font-weight: 600; }
+        .interactive-activity { background-color: var(--card-bg); border: 2px solid #e2e8f0; border-radius: 14px; padding: 25px; max-width: 700px; margin: 20px auto; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .activity-header { margin-bottom: 20px; border-bottom: 2px dashed #cbd5e1; padding-bottom: 15px; }
+        .activity-header h3 { font-size: 14pt; color: var(--primary); margin-bottom: 5px; }
+        .question-block { background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 15px; margin-bottom: 18px; }
+        .question-text { font-size: 11pt; font-weight: 600; margin-bottom: 10px; }
+        .options-group { display: flex; flex-direction: column; gap: 8px; }
+        .option-label { display: block; background-color: #ffffff; border: 1px solid #cbd5e1; padding: 10px 12px; border-radius: 6px; font-size: 10pt; cursor: pointer; }
+        .option-label input { margin-right: 8px; }
+        .question-block.correct-answer { border-left: 6px solid var(--correct); background-color: #f0fdf4; }
+        .question-block.incorrect-answer { border-left: 6px solid var(--incorrect); background-color: #fef2f2; }
+        .feedback-text { margin-top: 8px; font-size: 9.5pt; font-weight: 600; display: none; }
+        .correct-answer .feedback-text { color: var(--correct); display: block; }
+        .incorrect-answer .feedback-text { color: var(--incorrect); display: block; }
+        .btn-submit { display: block; width: 100%; background-color: var(--primary); color: #ffffff; border: none; padding: 12px; font-size: 12pt; font-weight: 700; border-radius: 8px; cursor: pointer; }
+        .results-box { display: none; background: #1e293b; color: #ffffff; padding: 20px; border-radius: 10px; margin-top: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div class="header-nav">
+        <a href="angulos.html" class="btn-back">← Volver al Menú de Ángulos</a>
+    </div>
+
+    <div class="interactive-activity">
+        <div class="activity-header">
+            <h3>⚡ Test: Identificación de Ángulos</h3>
+            <p style="font-size: 10pt; color: var(--text-muted);">Clasifica los ángulos según su apertura y la relación de sus lados.</p>
+        </div>
+
+        <form id="quizForm" onsubmit="evaluateQuiz(event)">
+            <div class="question-block" id="q1_block">
+                <div class="question-text">1. Si un ángulo mide exactamente 125°, ¿cómo se clasifica según su amplitud?</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q1" value="A"> A) Ángulo Agudo</label>
+                    <label class="option-label"><input type="radio" name="q1" value="B"> B) Ángulo Recto</label>
+                    <label class="option-label"><input type="radio" name="q1" value="C"> C) Ángulo Obtuso</label>
+                </div>
+                <div class="feedback-text" id="q1_feed"></div>
+            </div>
+
+            <div class="question-block" id="q2_block">
+                <div class="question-text">2. Dos ángulos que comparten el vértice y un lado, pero no se superponen, son:</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q2" value="A"> A) Ángulos Consecutivos</label>
+                    <label class="option-label"><input type="radio" name="q2" value="B"> B) Ángulos Opuestos al Vértice</label>
+                    <label class="option-label"><input type="radio" name="q2" value="C"> C) Ángulos Completos</label>
+                </div>
+                <div class="feedback-text" id="q2_feed"></div>
+            </div>
+
+            <div class="question-block" id="q3_block">
+                <div class="question-text">3. ¿Qué ocurre con la amplitud de dos ángulos que son "Opuestos al Vértice"?</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="q3" value="A"> A) Suman 180° de forma exacta</label>
+                    <label class="option-label"><input type="radio" name="q3" value="B"> B) Son exactamente iguales (efecto espejo)</label>
+                    <label class="option-label"><input type="radio" name="q3" value="C"> C) Uno es siempre agudo y el otro obtuso</label>
+                </div>
+                <div class="feedback-text" id="q3_feed"></div>
+            </div>
+
+            <button type="submit" class="btn-submit">🎯 Verificar y Corregir Ejercicios</button>
+        </form>
+
+        <div class="results-box" id="resultsPanel">
+            <h4>📊 ¡Resultados del Test!</h4>
+            <div style="font-size: 24pt; font-weight: 800; color: #38bdf8; margin: 10px 0;" id="scoreValue">0 / 3</div>
+            <p id="scoreMessage">Sigue practicando para dominar la geometría.</p>
+        </div>
+    </div>
+
+    <script>
+        function evaluateQuiz(event) {
+            event.preventDefault();
+            const answers = { q1: "C", q2: "A", q3: "B" };
+            const feedback = {
+                q1: { correct: "¡Perfecto! Al medir más de 90° y menos de 180° es un ángulo Obtuso.", incorrect: "Incorrecto. Recuerda que los agudos son menores de 90°." },
+                q2: { correct: "¡Muy bien! Esa es la definición exacta de ángulos consecutivos.", incorrect: "No es correcto. Los opuestos no comparten lados." },
+                q3: { correct: "¡Excelente! Los ángulos opuestos por el vértice miden exactamente lo mismo.", incorrect: "Incorrecto. Los que suman 180° son los adyacentes." }
+            };
+
+            let score = 0;
+            for (let i = 1; i <= 3; i++) {
+                const qName = "q" + i;
+                const selected = document.querySelector(`input[name="${qName}"]:checked`);
+                const block = document.getElementById(`${qName}_block`);
+                const feed = document.getElementById(`${qName}_feed`);
+                block.classList.remove("correct-answer", "incorrect-answer");
+
+                if (selected && selected.value === answers[qName]) {
+                    score++; block.classList.add("correct-answer"); feed.innerText = "✅ " + feedback[qName].correct;
+                } else {
+                    block.classList.add("incorrect-answer"); feed.innerText = "❌ " + feedback[qName].incorrect;
+                }
+            }
+            document.getElementById("resultsPanel").style.display = "block";
+            document.getElementById("scoreValue").innerText = score + " / 3";
+        }
+    </script>
+</body>
+</html>
