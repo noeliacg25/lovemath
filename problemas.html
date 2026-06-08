@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problemas de Tiempo - MatesEnRuta</title>
+    <style>
+        :root {
+            --bg-color: #fff7ed; /* Tono naranja muy suave, cálido y amigable */
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #475569;
+            --primary: #ea580c;    /* Naranja vivo para la sección del tiempo */
+            --secondary: #f97316;
+            --correct: #10b981;
+            --incorrect: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        .header-nav {
+            background-color: var(--card-bg);
+            padding: 12px 15px;
+            border-bottom: 1px solid #fed7aa;
+            margin-bottom: 20px;
+        }
+
+        .btn-back {
+            font-size: 10pt;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #ffffff;
+            padding: 25px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(234, 88, 12, 0.1);
+        }
+
+        .hero-banner h1 { font-size: 18pt; margin-bottom: 6px; }
+        .hero-banner p { font-size: 10.5pt; opacity: 0.9; }
+
+        .activity-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 22px;
+            border: 2px solid #fed7aa;
+            max-width: 750px;
+            margin: 0 auto 30px auto;
+        }
+
+        .activity-card h3 {
+            font-size: 13pt;
+            color: var(--primary);
+            margin-bottom: 15px;
+            border-bottom: 2px dashed #fed7aa;
+            padding-bottom: 8px;
+        }
+
+        .problem-block {
+            background-color: #fffbf7;
+            border: 1px solid #ffedd5;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .problem-text {
+            font-size: 10.5pt;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .problem-context {
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 9.5pt;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .input-row {
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .input-row input {
+            width: 75px;
+            padding: 6px;
+            font-size: 10pt;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .input-row span {
+            font-size: 10pt;
+            font-weight: bold;
+            color: var(--text-muted);
+            margin-right: 8px;
+        }
+
+        /* Estados de corrección */
+        .problem-block.correct {
+            border-left: 6px solid var(--correct);
+            background-color: #f0fdf4;
+        }
+
+        .problem-block.incorrect {
+            border-left: 6px solid var(--incorrect);
+            background-color: #fef2f2;
+        }
+
+        .feed-msg {
+            font-size: 9.5pt;
+            font-weight: bold;
+            margin-top: 8px;
+            display: none;
+        }
+        .correct .feed-msg { display: block; color: var(--correct); }
+        .incorrect .feed-msg { display: block; color: var(--incorrect); }
+
+        .btn-check {
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 12pt;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .btn-check:hover { background-color: #c2410c; }
+
+        .score-board {
+            display: none;
+            background-color: #1e293b;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 15px;
+            font-size: 9pt;
+            color: var(--text-muted);
+            border-top: 1px solid #fed7aa;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-nav">
+        <a href="tiempo.html" class="btn-back">← Volver al Menú de Tiempo</a>
+    </div>
+
+    <div class="hero-banner">
+        <h1>🕒 Desafío Matemático: Situaciones Problemáticas</h1>
+        <p>¡Resuelve estos 4 problemas del día a día calculando horas, minutos y segundos!</p>
+    </div>
+
+    <div class="activity-card">
+        <h3>📝 Resuelve y comprueba tus respuestas</h3>
+        
+        <form id="timeProblemsForm" onsubmit="checkProblems(event)">
+            
+            <div class="problem-block" id="prob1">
+                <span class="problem-context">🎬 Sesión de Cine:</span>
+                <div class="problem-text">1. Una película de dibujos animados dura exactamente 1 hora y 15 minutos. Si la película empieza a las 17:00, ¿a qué hora terminará?</div>
+                <div class="input-row">
+                    <input type="number" id="h1" min="0" max="23" required> <span>horas</span>
+                    <input type="number" id="m1" min="0" max="59" required> <span>minutos</span>
+                </div>
+                <div class="feed-msg" id="f1"></div>
+            </div>
+
+            <div class="problem-block" id="prob2">
+                <span class="problem-context">⚽ El Partido de Fútbol:</span>
+                <div class="problem-text">2. Un partido de fútbol terminó a las 20:30. Si el partido tuvo una duración total de 2 horas (incluyendo el descanso), ¿a qué hora comenzó?</div>
+                <div class="input-row">
+                    <input type="number" id="h2" min="0" max="23" required> <span>horas</span>
+                    <input type="number" id="m2" min="0" max="59" required> <span>minutos</span>
+                </div>
+                <div class="feed-msg" id="f2"></div>
+            </div>
+
+            <div class="problem-block" id="prob3">
+                <span class="problem-context">🏃 Carrera de Relevos:</span>
+                <div class="problem-text">3. Lucía ha tardado exactamente 3 minutos y 20 segundos en dar dos vueltas a la pista de atletismo. ¿Cuántos SEGUNDOS ha tardado en total?</div>
+                <div class="input-row">
+                    <input type="number" id="s3" required> <span>segundos en total</span>
+                </div>
+                <div class="feed-msg" id="f3"></div>
+            </div>
+
+            <div class="problem-block" id="prob4">
+                <span class="problem-context">🎮 Tiempo de Juego:</span>
+                <div class="problem-text">4. Un videojuego muestra en pantalla que has jugado durante 90 minutos seguidos. Expresa ese tiempo combinando horas y minutos.</div>
+                <div class="input-row">
+                    <input type="number" id="h4" required> <span>hora / s</span>
+                    <input type="number" id="m4" required> <span>minutos</span>
+                </div>
+                <div class="feed-msg" id="f4"></div>
+            </div>
+
+            <button type="submit" class="btn-check">🎯 Corregir Problemas</button>
+        </form>
+
+        <div class="score-board" id="scorePanel">
+            <h4 style="font-size: 14pt;">📊 Tus Resultados</h4>
+            <div style="font-size: 26pt; font-weight: 800; color: #fb923c; margin: 8px 0;" id="scoreVal">0 / 4</div>
+            <p id="scoreMsg" style="font-size: 10.5pt; opacity: 0.9;"></p>
+        </div>
+    </div>
+
+    <script>
+        function checkProblems(event) {
+            event.preventDefault();
+            
+            let points = 0;
+
+            // --- Validación Problema 1 (18h 15m) ---
+            const h1 = parseInt(document.getElementById("h1").value);
+            const m1 = parseInt(document.getElementById("m1").value);
+            const p1 = document.getElementById("prob1");
+            const f1 = document.getElementById("f1");
+            p1.classList.remove("correct", "incorrect");
+            if (h1 === 18 && m1 === 15) {
+                points++; p1.classList.add("correct");
+                f1.innerText = "✅ ¡Excelente! 17:00 + 1h 15m = 18:15.";
+            } else {
+                p1.classList.add("incorrect");
+                f1.innerText = "❌ Incorrecto. Suma 1 hora a las 17 y luego añádele los 15 minutos.";
+            }
+
+            // --- Validación Problema 2 (18h 30m) ---
+            const h2 = parseInt(document.getElementById("h2").value);
+            const m2 = parseInt(document.getElementById("m2").value);
+            const p2 = document.getElementById("prob2");
+            const f2 = document.getElementById("f2");
+            p2.classList.remove("correct", "incorrect");
+            if (h2 === 18 && m2 === 30) {
+                points++; p2.classList.add("correct");
+                f2.innerText = "✅ ¡Muy bien! Restamos las 2 horas a las 20:30 y nos da las 18:30.";
+            } else {
+                p2.classList.add("incorrect");
+                f2.innerText = "❌ Incorrecto. Tienes que ir hacia atrás en el tiempo: resta 2 horas a las 20h.";
+            }
+
+            // --- Validación Problema 3 (200s) ---
+            const s3 = parseInt(document.getElementById("s3").value);
+            const p3 = document.getElementById("prob3");
+            const f3 = document.getElementById("f3");
+            p3.classList.remove("correct", "incorrect");
+            if (s3 === 200) {
+                points++; p3.classList.add("correct");
+                f3.innerText = "✅ ¡Brillante! 3 minutos x 60 segundos = 180s. Si sumamos los 20s sueltos, da 200 segundos.";
+            } else {
+                p3.classList.add("incorrect");
+                f3.innerText = "❌ Incorrecto. Recuerda transformar los 3 minutos a segundos (3 x 60) y sumar los 20 segundos.";
+            }
+
+            // --- Validación Problema 4 (1h 30m) ---
