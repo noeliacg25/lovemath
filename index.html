@@ -1,1 +1,237 @@
-<li><a href="sistemasexageximal.html">🔹 Sistema sexagesimal</a></li>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MatesEnRuta - ¡Domina las Matemáticas!</title>
+    <style>
+        /* Variables de color - Paleta juvenil, fresca y contrastada */
+        :root {
+            --bg-color: #f0f4f8;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary: #4f46e5;       /* Índigo vibrante */
+            --primary-hover: #4338ca;
+            --secondary: #0ea5e9;     /* Celeste enérgico */
+            --accent-1: #f43f5e;      /* Rosa/Coral para Álgebra */
+            --accent-2: #10b981;      /* Verde para Geometría */
+            --accent-3: #f59e0b;      /* Ámbar para Tiempo/Magnitudes */
+            --accent-4: #8b5cf6;      /* Morado para Retos/Juegos */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        @page {
+            size: A4;
+            margin: 15mm 12mm;
+            background-color: var(--bg-color);
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.35;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Encabezado Principal */
+        .hero-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #ffffff;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.15);
+        }
+
+        .hero-header h1 {
+            font-size: 24pt;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .hero-header p {
+            font-size: 11pt;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        /* Sección de Introducción */
+        .intro-box {
+            background-color: var(--card-bg);
+            border-left: 5px solid var(--secondary);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .intro-box h2 {
+            font-size: 13pt;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .intro-box p {
+            font-size: 10.5pt;
+            color: var(--text-muted);
+        }
+
+        /* Título de Secciones */
+        .section-title {
+            font-size: 14pt;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        /* Estructura de Tabla simulando Grid para WeasyPrint */
+        .modules-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 12px;
+            margin-bottom: 25px;
+        }
+
+        .module-cell {
+            width: 50%;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            vertical-align: top;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Colores temáticos para las tarjetas */
+        .algebra { border-top: 5px solid var(--accent-1); }
+        .geometria { border-top: 5px solid var(--accent-2); }
+        .tiempo { border-top: 5px solid var(--accent-3); }
+        .retos { border-top: 5px solid var(--accent-4); }
+
+        .module-cell h3 {
+            font-size: 12pt;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .algebra h3 { color: var(--accent-1); }
+        .geometria h3 { color: var(--accent-2); }
+        .tiempo h3 { color: var(--accent-3); }
+        .retos h3 { color: var(--accent-4); }
+
+        .module-cell p {
+            font-size: 10pt;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            height: 45px; /* Altura fija aproximada para nivelar texto */
+            overflow: hidden;
+        }
+
+        /* Botones / Enlaces Juveniles */
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            font-size: 9.5pt;
+            font-weight: 600;
+            text-decoration: none;
+            color: #ffffff;
+            border-radius: 8px;
+            text-align: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-algebra { background-color: var(--accent-1); }
+        .btn-geometria { background-color: var(--accent-2); }
+        .btn-tiempo { background-color: var(--accent-3); }
+        .btn-retos { background-color: var(--accent-4); }
+
+        /* Pie de página */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 9pt;
+            color: var(--text-muted);
+        }
+        
+        .footer-tag {
+            background-color: #e2e8f0;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Encabezado Principal -->
+    <div class="hero-header">
+        <h1>📐 MatesEnRuta 🚀</h1>
+        <p>Tu espacio interactivo para entrenar tu mente, superar retos y dominar las matemáticas de forma fácil y divertida.</p>
+    </div>
+
+    <!-- Bloque de bienvenida / Instrucciones -->
+    <div class="intro-box">
+        <h2>¿Qué vas a repasar hoy?</h2>
+        <p>Selecciona cualquiera de las áreas temáticas de abajo para acceder a las herramientas dinámicas, gráficos interactivos y ejercicios de autoevaluación.</p>
+    </div>
+
+    <h2 class="section-title">Módulos de Aprendizaje</h2>
+
+    <!-- Tabla que organiza las secciones (para compatibilidad total con PDF/WeasyPrint) -->
+    <table class="modules-table">
+        <tr>
+            <!-- Módulo Álgebra -->
+            <td class="module-cell algebra">
+                <h3>Aritmética y Álgebra</h3>
+                <p>Domina las operaciones básicas, fracciones, ecuaciones y misterios numéricos con trucos súper visuales.</p>
+                <a href="algebra.html" class="btn btn-algebra">¡Empezar a tope! →</a>
+            </td>
+            <!-- Módulo Geometría -->
+            <td class="module-cell geometria">
+                <h3>Geometría Espacial</h3>
+                <p>Aprende a calcular áreas, perímetros y volúmenes jugando con formas, polígonos y figuras en 2D y 3D.</p>
+                <a href="geometria.html" class="btn btn-geometria">Explorar formas →</a>
+            </td>
+        </tr>
+        <tr>
+            <!-- Módulo Tiempo (El que estás trabajando) -->
+            <td class="module-cell tiempo">
+                <h3>⏳ El Paso del Tiempo</h3>
+                <p>Aprende a dominar las horas, los calendarios, conversiones de unidades temporales y gestión del reloj.</p>
+                <!-- IMPORTANTE: El enlace corregido relativo a tu archivo tiempo.html -->
+                <a href="tiempo.html" class="btn btn-tiempo">Controlar el tiempo →</a>
+            </td>
+            <!-- Módulo Retos -->
+            <td class="module-cell retos">
+                <h3>⚡ Desafíos y Juegos</h3>
+                <p>Pon a prueba tu velocidad mental con acertijos matemáticos rápidos y rompecabezas diseñados para expertos.</p>
+                <a href="retos.html" class="btn btn-retos">Aceptar el reto →</a>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Pie de página informativo -->
+    <div class="footer">
+        <p>Creado con 💻 para el proyecto de Matemáticas | Hecho con código limpio y adaptado para <span class="footer-tag">GitHub Pages</span></p>
+    </div>
+
+</body>
+</html>
