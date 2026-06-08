@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema Sexagesimal - MatesEnRuta</title>
+    <title>Sistema Sexagesimal Ampliado - MatesEnRuta</title>
     <style>
         :root {
-            --bg-color: #f0fdfa; /* Tono verde/cian muy suave y fresco */
+            --bg-color: #f0fdfa;
             --card-bg: #ffffff;
             --text-main: #0f172a;
             --text-muted: #475569;
-            --primary: #0d9488;    /* Teal / Turquesa oscuro juvenil */
+            --primary: #0d9488;
             --secondary: #14b8a6;
             --accent: #f59e0b;
             --correct: #10b981;
@@ -21,12 +21,6 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-        }
-
-        @page {
-            size: A4;
-            margin: 15mm 12mm;
-            background-color: var(--bg-color);
         }
 
         body {
@@ -62,14 +56,12 @@
         .hero-banner h1 { font-size: 18pt; margin-bottom: 6px; }
         .hero-banner p { font-size: 10.5pt; opacity: 0.9; }
 
-        /* Tarjeta de teoría metodológica */
         .theory-box {
             background-color: var(--card-bg);
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 25px;
             border: 1px solid #ccfbf1;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.01);
         }
 
         .theory-box h3 {
@@ -78,7 +70,6 @@
             margin-bottom: 10px;
         }
 
-        /* Tabla explicativa del sistema sexagesimal */
         .step-table {
             width: 100%;
             margin: 15px 0;
@@ -90,13 +81,13 @@
             border-radius: 8px;
         }
 
-        /* Bloque de ejercicios prácticos */
         .activity-card {
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 22px;
             border: 2px solid #e2e8f0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            max-width: 800px;
+            margin: 0 auto 30px auto;
         }
 
         .activity-card h3 {
@@ -107,13 +98,17 @@
             padding-bottom: 8px;
         }
 
+        .exercise-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
         .exercise-row {
             background-color: #f8fafc;
             border: 1px solid #e2e8f0;
             border-radius: 8px;
             padding: 12px 15px;
-            margin-bottom: 12px;
-            display: block;
         }
 
         .exercise-label {
@@ -125,10 +120,13 @@
 
         .input-group {
             margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .input-group input {
-            width: 90px;
+            width: 100px;
             padding: 6px 10px;
             font-size: 10pt;
             border: 1px solid #cbd5e1;
@@ -140,11 +138,11 @@
         .input-group span {
             font-size: 11pt;
             font-weight: bold;
-            margin-right: 12px;
             color: var(--text-muted);
+            margin-right: 10px;
         }
 
-        /* Estados dinámicos de corrección */
+        /* Estados de corrección */
         .exercise-row.correct {
             border-left: 6px solid var(--correct);
             background-color: #f0fdf4;
@@ -156,9 +154,9 @@
         }
 
         .feed-msg {
-            font-size: 9pt;
+            font-size: 9.5pt;
             font-weight: bold;
-            margin-top: 5px;
+            margin-top: 6px;
             display: none;
         }
         .correct .feed-msg { display: block; color: var(--correct); }
@@ -169,12 +167,13 @@
             background-color: var(--primary);
             color: white;
             border: none;
-            padding: 12px;
-            font-size: 11pt;
+            padding: 14px;
+            font-size: 12pt;
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
             margin-top: 15px;
+            box-shadow: 0 4px 6px rgba(13, 148, 136, 0.2);
         }
 
         .btn-check:hover { background-color: #0f766e; }
@@ -183,10 +182,10 @@
             display: none;
             background-color: #1e293b;
             color: white;
-            padding: 15px;
-            border-radius: 8px;
+            padding: 20px;
+            border-radius: 10px;
             text-align: center;
-            margin-top: 20px;
+            margin-top: 25px;
         }
 
         .footer {
@@ -202,75 +201,103 @@
 <body>
 
     <div class="header-nav">
-        <!-- Volverá a la página principal de los ángulos -->
         <a href="angulos.html" class="btn-back">← Volver al Menú de Ángulos</a>
     </div>
 
     <div class="hero-banner">
         <h1>⏳ Medida de Ángulos: Sistema Sexagesimal</h1>
-        <p>Aprende a transformar medidas angulares pasando de Grados (°) a Minutos (') y Segundos ('').</p>
+        <p>Entrenamiento interactivo para dominar los Grados (°), Minutos (') y Segundos ('').</p>
     </div>
 
-    <!-- CUADRO METODOLÓGICO -->
-    <div class="theory-box">
-        <h3>💡 El truco definitivo</h3>
-        <p style="font-size: 10pt; color: var(--text-muted);">Los ángulos no solo se miden en grados completos. Para ser súper precisos usamos minutos y segundos, exactamente igual que con las horas de un reloj:</p>
+    <div class="theory-box" style="max-width: 800px; margin: 0 auto 25px auto;">
+        <h3>💡 Tabla de Conversión Rápida</h3>
+        <p style="font-size: 10pt; color: var(--text-muted);">Usa esta guía matemática para resolver los ejercicios:</p>
         <div class="step-table">
-            Grados (°) — (x60) → Minutos (') — (x60) → Segundos ('')<br>
-            Segundos ('') — (:60) → Minutos (') — (:60) → Grados (°)
+            Para BAJAR (De Grande a Pequeño) ➡️ Multiplica por 60<br>
+            Para SUBIR (De Pequeño a Grande) ⬅️ Divide entre 60
         </div>
     </div>
 
-    <!-- EJERCICIOS PRÁCTICOS -->
     <div class="activity-card">
-        <h3>📝 Desafío de Conversión Autocorregible</h3>
-        <p style="font-size: 9.5pt; color: var(--text-muted); margin-bottom: 15px;">Completa las casillas en blanco y comprueba si tu cálculo es correcto al instante.</p>
+        <h3>📝 Gran Desafío Sexagesimal (8 Ejercicios)</h3>
+        <p style="font-size: 9.5pt; color: var(--text-muted); margin-bottom: 20px;">Resuelve las siguientes conversiones. ¡Presta mucha atención a las unidades solicitadas!</p>
         
         <form id="conversorForm" onsubmit="checkConversor(event)">
-            
-            <!-- Ejercicio 1 -->
-            <div class="exercise-row" id="ex1">
-                <div class="exercise-label">1. Pasa a MINUTOS (') la siguiente medida: 4°</div>
-                <div class="input-group">
-                    <input type="number" id="ans1" required> <span>'</span>
+            <div class="exercise-grid">
+                
+                <div class="exercise-row" id="ex1">
+                    <div class="exercise-label">1. Pasa a MINUTOS (') la siguiente medida: 4°</div>
+                    <div class="input-group">
+                        <input type="number" id="ans1" required> <span>'</span>
+                    </div>
+                    <div class="feed-msg" id="f1"></div>
                 </div>
-                <div class="feed-msg" id="f1"></div>
+
+                <div class="exercise-row" id="ex2">
+                    <div class="exercise-label">2. Pasa a SEGUNDOS ('') la siguiente medida: 2'</div>
+                    <div class="input-group">
+                        <input type="number" id="ans2" required> <span>''</span>
+                    </div>
+                    <div class="feed-msg" id="f2"></div>
+                </div>
+
+                <div class="exercise-row" id="ex3">
+                    <div class="exercise-label">3. Convierte a GRADOS (°) la siguiente cantidad: 180'</div>
+                    <div class="input-group">
+                        <input type="number" id="ans3" required> <span>°</span>
+                    </div>
+                    <div class="feed-msg" id="f3"></div>
+                </div>
+
+                <div class="exercise-row" id="ex4">
+                    <div class="exercise-label">4. Un ángulo mide 1° y 5'. ¿Cuántos MINUTOS (') son en total?</div>
+                    <div class="input-group">
+                        <input type="number" id="ans4" required> <span>'</span>
+                    </div>
+                    <div class="feed-msg" id="f4"></div>
+                </div>
+
+                <div class="exercise-row" id="ex5">
+                    <div class="exercise-label">5. Pasa directamente de GRADOS (°) a SEGUNDOS (''): 2°</div>
+                    <div class="input-group">
+                        <input type="number" id="ans5" required> <span>''</span>
+                    </div>
+                    <div class="feed-msg" id="f5"></div>
+                </div>
+
+                <div class="exercise-row" id="ex6">
+                    <div class="exercise-label">6. Convierte a MINUTOS (') la siguiente cantidad de segundos: 360''</div>
+                    <div class="input-group">
+                        <input type="number" id="ans6" required> <span>'</span>
+                    </div>
+                    <div class="feed-msg" id="f6"></div>
+                </div>
+
+                <div class="exercise-row" id="ex7">
+                    <div class="exercise-label">7. Un ángulo mide exactamente 300'. ¿A cuántos GRADOS (°) equivale?</div>
+                    <div class="input-group">
+                        <input type="number" id="ans7" required> <span>°</span>
+                    </div>
+                    <div class="feed-msg" id="f7"></div>
+                </div>
+
+                <div class="exercise-row" id="ex8">
+                    <div class="exercise-label">8. Expresa en SEGUNDOS ('') este ángulo complejo: 2' y 15''</div>
+                    <div class="input-group">
+                        <input type="number" id="ans8" required> <span>''</span>
+                    </div>
+                    <div class="feed-msg" id="f8"></div>
+                </div>
+
             </div>
 
-            <!-- Ejercicio 2 -->
-            <div class="exercise-row" id="ex2">
-                <div class="exercise-label">2. Pasa a SEGUNDOS ('') la siguiente medida: 2'</div>
-                <div class="input-group">
-                    <input type="number" id="ans2" required> <span>''</span>
-                </div>
-                <div class="feed-msg" id="f2"></div>
-            </div>
-
-            <!-- Ejercicio 3 -->
-            <div class="exercise-row" id="ex3">
-                <div class="exercise-label">3. Convierte a GRADOS (°) la siguiente cantidad: 180'</div>
-                <div class="input-group">
-                    <input type="number" id="ans3" required> <span>°</span>
-                </div>
-                <div class="feed-msg" id="f3"></div>
-            </div>
-
-            <!-- Ejercicio 4 (Avanzado Inverso completo) -->
-            <div class="exercise-row" id="ex4">
-                <div class="exercise-label">4. Un ángulo mide 1° y 5'. ¿Cuántos MINUTOS (') son en total?</div>
-                <div class="input-group">
-                    <input type="number" id="ans4" required> <span>'</span>
-                </div>
-                <div class="feed-msg" id="f4"></div>
-            </div>
-
-            <button type="submit" class="btn-check">🎯 Comprobar mis soluciones</button>
+            <button type="submit" class="btn-check">🎯 Comprobar mis 8 soluciones</button>
         </form>
 
         <div class="score-board" id="scorePanel">
-            <h4 style="font-size: 13pt;"> Puntuación Obtenida</h4>
-            <div style="font-size: 20pt; font-weight: 800; color: #2dd4bf; margin: 5px 0;" id="scoreVal">0 / 4</div>
-            <p id="scoreMsg" style="font-size: 9.5pt; opacity: 0.9;"></p>
+            <h4 style="font-size: 14pt;">📊 Puntuación Obtenida</h4>
+            <div style="font-size: 26pt; font-weight: 800; color: #2dd4bf; margin: 8px 0;" id="scoreVal">0 / 8</div>
+            <p id="scoreMsg" style="font-size: 10.5pt; opacity: 0.9;"></p>
         </div>
     </div>
 
@@ -278,23 +305,38 @@
         function checkConversor(event) {
             event.preventDefault();
             
-            // Soluciones correctas esperadas
-            const solutions = { ans1: 240, ans2: 120, ans3: 3, ans4: 65 };
+            // Soluciones de los 8 ejercicios
+            const solutions = { 
+                ans1: 240, 
+                ans2: 120, 
+                ans3: 3, 
+                ans4: 65, 
+                ans5: 7200, 
+                ans6: 6, 
+                ans7: 5, 
+                ans8: 135 
+            };
+
             const explanations = {
-                ans1: "¡Correcto! 4° x 60 = 240 minutos.",
-                ans2: "¡Excelente! 2' x 60 = 120 segundos.",
-                ans3: "¡Muy bien! 180' divididos entre 60 = 3 grados.",
-                ans4: "¡Perfecto! 1° son 60' + los 5' extras = 65 minutos."
+                ans1: "¡Correcto! 4° x 60 = 240'.",
+                ans2: "¡Excelente! 2' x 60 = 120''.",
+                ans3: "¡Muy bien! 180' ÷ 60 = 3°.",
+                ans4: "¡Perfecto! 1° son 60' + los 5' extras = 65'.",
+                ans5: "¡Increíble! Para pasar de grados a segundos multiplicamos por 3600 (60 x 60). 2° x 3600 = 7200''.",
+                ans6: "¡Correcto! Subimos un escalón: 360'' ÷ 60 = 6'.",
+                ans7: "¡Estupendo! Subimos a grados dividiendo: 300' ÷ 60 = 5°.",
+                ans8: "¡Logrado! 2' x 60 = 120'' + los 15'' extras = 135''."
             };
 
             let points = 0;
-            const keys = ["ans1", "ans2", "ans3", "ans4"];
+            const total = 8;
 
-            keys.forEach((key, index) => {
+            for (let i = 1; i <= total; i++) {
+                const key = "ans" + i;
                 const inputElement = document.getElementById(key);
                 const userVal = parseInt(inputElement.value);
-                const rowElement = document.getElementById("ex" + (index + 1));
-                const feedElement = document.getElementById("f" + (index + 1));
+                const rowElement = document.getElementById("ex" + i);
+                const feedElement = document.getElementById("f" + i);
 
                 rowElement.classList.remove("correct", "incorrect");
 
@@ -304,24 +346,23 @@
                     feedElement.innerText = "✅ " + explanations[key];
                 } else {
                     rowElement.classList.add("incorrect");
-                    feedElement.innerText = "❌ Incorrecto. Vuelve a calcular aplicando la multiplicación o división por 60.";
+                    feedElement.innerText = "❌ Incorrecto. Revisa el cálculo matemático utilizando la regla de multiplicar o dividir por 60.";
                 }
-            });
+            }
 
-            // Mostrar el panel general de puntuaciones
             const panel = document.getElementById("scorePanel");
             const valBox = document.getElementById("scoreVal");
             const msgBox = document.getElementById("scoreMsg");
 
             panel.style.display = "block";
-            valBox.innerText = points + " / 4";
+            valBox.innerText = points + " / " + total;
 
-            if (points === 4) {
-                msgBox.innerText = "¡Súper! Has clavado todas las conversiones de grado. ¡Eres una calculadora humana! 🚀";
-            } else if (points >= 2) {
-                msgBox.innerText = "¡No está mal! Has superado la mitad del reto. Repasa las que están en rojo.";
+            if (points === total) {
+                msgBox.innerText = "¡Excelente! Has conseguido una puntuación perfecta. ¡Dominas el sistema sexagesimal de los ángulos como nadie! 🏆🚀";
+            } else if (points >= 5) {
+                msgBox.innerText = "¡Buen trabajo! Has aprobado con nota el desafío. Corrige los pequeños despistes revisando las respuestas en rojo. 👍";
             } else {
-                msgBox.innerText = "¡Sigue entrenando! Recuerda: para bajar de unidad multiplica por 60; para subir, divide.";
+                msgBox.innerText = "¡No te preocupes! El sistema sexagesimal requiere práctica. Vuelve a calcular despacio fijándote si debes multiplicar o dividir. 💪";
             }
 
             panel.scrollIntoView({ behavior: 'smooth' });
@@ -329,7 +370,7 @@
     </script>
 
     <div class="footer">
-        <p>Módulo de Sistema Sexagesimal Interactiva | MatesEnRuta 2026</p>
+        <p>Módulo del Sistema Sexagesimal | Ejercicios Interactivos Ampliados</p>
     </div>
 
 </body>
