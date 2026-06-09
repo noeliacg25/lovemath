@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taller de Relojes: Analógico y Digital - MatesEnRuta</title>
+    <title>Súper Taller de Relojes Completo - MatesEnRuta</title>
     <style>
         :root {
-            --bg-color: #f3e8ff; /* Púrpura muy suave */
+            --bg-color: #f3e8ff;
             --card-bg: #ffffff;
             --text-main: #1e293b;
             --text-muted: #475569;
-            --primary: #a855f7;    /* Púrpura vibrante */
+            --primary: #a855f7;
             --secondary: #c084fc;
             --correct: #10b981;
             --incorrect: #ef4444;
@@ -86,7 +86,7 @@
             margin-bottom: 15px;
         }
 
-        /* --- RELOJ ANALÓGICO CSS --- */
+        /* --- RELOJ ANALÓGICO REALISTA CON 12 NÚMEROS --- */
         .clock-wrapper {
             display: flex;
             justify-content: center;
@@ -94,15 +94,16 @@
         }
 
         .analog-clock {
-            width: 120px;
-            height: 120px;
-            border: 4px solid #475569;
+            width: 140px;
+            height: 140px;
+            border: 4px solid #334155;
             border-radius: 50%;
             position: relative;
             background: #ffffff;
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.05);
         }
 
-        /* Centro del reloj */
+        /* Eje central */
         .analog-clock::after {
             content: '';
             position: absolute;
@@ -116,14 +117,33 @@
             z-index: 10;
         }
 
-        /* Marcas horarias básicas (12, 3, 6, 9) */
-        .mark { position: absolute; font-size: 8pt; font-weight: bold; color: #64748b; }
-        .m12 { top: 2px; left: 50%; transform: translateX(-50%); }
-        .m3  { right: 4px; top: 50%; transform: translateY(-50%); }
-        .m6  { bottom: 2px; left: 50%; transform: translateX(-50%); }
-        .m9  { left: 4px; top: 50%; transform: translateY(-50%); }
+        /* Posicionamiento de los 12 números usando transformaciones circulares */
+        .num {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            font-size: 8.5pt;
+            font-weight: bold;
+            color: #475569;
+            text-align: center;
+            line-height: 20px;
+        }
+        
+        /* Fórmulas matemáticas de posición para la esfera del reloj */
+        .n1  { top: 6px; right: 32px; }
+        .n2  { top: 30px; right: 8px; }
+        .n3  { top: 56px; right: 2px; }
+        .n4  { bottom: 30px; right: 8px; }
+        .n5  { bottom: 6px; right: 32px; }
+        .n6  { bottom: 2px; left: 58px; }
+        .n7  { bottom: 6px; left: 32px; }
+        .n8  { bottom: 30px; left: 8px; }
+        .n9  { top: 56px; left: 2px; }
+        .n10 { top: 30px; left: 8px; }
+        .n11 { top: 6px; left: 32px; }
+        .n12 { top: 2px; left: 58px; }
 
-        /* Agujas */
+        /* Agujas fijas básicas */
         .hand {
             position: absolute;
             bottom: 50%;
@@ -132,19 +152,19 @@
             border-radius: 4px;
         }
         .hour-hand {
-            width: 4px;
-            height: 30px;
+            width: 4.5px;
+            height: 35px;
             background-color: #1e293b;
             z-index: 5;
         }
         .minute-hand {
             width: 3px;
-            height: 45px;
+            height: 55px;
             background-color: #a855f7;
             z-index: 4;
         }
 
-        /* --- CONTROLES DE RESPUESTA --- */
+        /* --- ELEMENTOS DE RESPUESTA --- */
         .digital-input-group {
             display: flex;
             align-items: center;
@@ -154,7 +174,7 @@
         }
 
         .digital-input-group input {
-            width: 65px;
+            width: 70px;
             padding: 8px;
             font-size: 12pt;
             text-align: center;
@@ -166,7 +186,7 @@
 
         .digital-clock-display {
             background: #1e293b;
-            color: #38bdf8;
+            color: #22d3ee;
             font-family: monospace;
             font-size: 14pt;
             padding: 6px 15px;
@@ -179,33 +199,26 @@
         .options-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 12px;
             margin-top: 10px;
         }
 
         .option-btn {
             background-color: #ffffff;
             border: 2px solid #cbd5e1;
-            padding: 10px;
+            padding: 12px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 10pt;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             gap: 10px;
         }
 
-        .option-btn:hover { background-color: #f8fafc; border-color: #a855f7; }
-        
-        /* Estilos de selección para el tipo test */
-        .option-btn.selected {
-            border-color: var(--primary);
-            background-color: #f3e8ff;
-        }
+        .option-btn:hover { border-color: #a855f7; background-color: #faf5ff; }
+        .option-btn.selected { border-color: var(--primary); background-color: #f3e8ff; }
 
-        /* Estados de corrección */
         .challenge-block.correct { border-left: 6px solid var(--correct); background-color: #f0fdf4; }
         .challenge-block.incorrect { border-left: 6px solid var(--incorrect); background-color: #fef2f2; }
 
@@ -245,100 +258,91 @@
     </div>
 
     <div class="hero-banner">
-        <h1>⌚ Conectando Agujas y Números</h1>
-        <p>¡Pasa de reloj analógico a digital y viceversa! Demuestra que controlas los dos formatos.</p>
+        <h1>⌚ Gran Desafío de Relojes Completos</h1>
+        <p>Lee esferas con todos sus números y domina la conversión de formatos AM/PM y 24 horas.</p>
     </div>
 
     <div class="activity-card">
-        <h3>📝 Completa las 6 misiones del reloj</h3>
+        <h3>📝 Resuelve los 8 retos interactivos</h3>
         
         <form id="clocksForm" onsubmit="checkClocks(event)">
             
             <div class="challenge-block" id="block1">
-                <div class="challenge-text">1. ☀️ ¡Es hora de levantarse! Escribe en formato DIGITAL la hora de la mañana que marca este reloj:</div>
+                <div class="challenge-text">1. ☀️ Hora de entrar al colegio por la mañana. ¿Qué hora marca este reloj?</div>
                 <div class="clock-wrapper">
                     <div class="analog-clock">
-                        <span class="mark m12">12</span><span class="mark m3">3</span><span class="mark m6">6</span><span class="mark m9">9</span>
-                        <div class="hand hour-hand" style="transform: rotate(240deg);"></div>
-                        <div class="hand minute-hand" style="transform: rotate(0deg);"></div>
-                    </div>
+                        <span class="num n1">1</span><span class="num n2">2</span><span class="num n3">3</span><span class="num n4">4</span><span class="num n5">5</span><span class="num n6">6</span><span class="num n7">7</span><span class="num n8">8</span><span class="num n9">9</span><span class="num n10">10</span><span class="num n11">11</span><span class="num n12">12</span>
+                        <div class="hand hour-hand" style="transform: rotate(220deg);"></div> <div class="hand minute-hand" style="transform: rotate(120deg);"></div> </div>
                 </div>
                 <div class="digital-input-group">
                     <input type="number" id="h1" placeholder="HH" min="0" max="23" required>
-                    <span style="font-weight: bold; font-size: 16pt;">:</span>
+                    <span style="font-weight: bold; font-size: 14pt;">:</span>
                     <input type="number" id="m1" placeholder="MM" min="0" max="59" required>
                 </div>
                 <div class="feed-msg" id="f1"></div>
             </div>
 
             <div class="challenge-block" id="block2">
-                <div class="challenge-text">2. 🎒 Al salir del comedor escolar por la TARDE. Escribe la hora en formato DIGITAL de 24 HORAS:</div>
+                <div class="challenge-text">2. 🛹 Hora de la merienda por la TARDE. Escribe el resultado en FORMATO DE 24 HORAS:</div>
                 <div class="clock-wrapper">
                     <div class="analog-clock">
-                        <span class="mark m12">12</span><span class="mark m3">3</span><span class="mark m6">6</span><span class="mark m9">9</span>
-                        <div class="hand hour-hand" style="transform: rotate(105deg);"></div>
-                        <div class="hand minute-hand" style="transform: rotate(180deg);"></div>
-                    </div>
+                        <span class="num n1">1</span><span class="num n2">2</span><span class="num n3">3</span><span class="num n4">4</span><span class="num n5">5</span><span class="num n6">6</span><span class="num n7">7</span><span class="num n8">8</span><span class="num n9">9</span><span class="num n10">10</span><span class="num n11">11</span><span class="num n12">12</span>
+                        <div class="hand hour-hand" style="transform: rotate(122.5deg);"></div> <div class="hand minute-hand" style="transform: rotate(30deg);"></div> </div>
                 </div>
                 <div class="digital-input-group">
                     <input type="number" id="h2" placeholder="HH" required>
-                    <span style="font-weight: bold; font-size: 16pt;">:</span>
+                    <span style="font-weight: bold; font-size: 14pt;">:</span>
                     <input type="number" id="m2" placeholder="MM" required>
                 </div>
                 <div class="feed-msg" id="f2"></div>
             </div>
 
             <div class="challenge-block" id="block3">
-                <div class="challenge-text">3. 🌙 Es la hora de cenar en casa. Escribe la hora en formato DIGITAL de 24 HORAS (Las nueve menos cuarto de la noche):</div>
+                <div class="challenge-text">3. 🍽️ Hora del almuerzo. Escribe el marcador digital en FORMATO DE 24 HORAS (Las dos menos veinte del mediodía):</div>
                 <div class="clock-wrapper">
                     <div class="analog-clock">
-                        <span class="mark m12">12</span><span class="mark m3">3</span><span class="mark m6">6</span><span class="mark m9">9</span>
-                        <div class="hand hour-hand" style="transform: rotate(262.5deg);"></div>
-                        <div class="hand minute-hand" style="transform: rotate(270deg);"></div>
-                    </div>
+                        <span class="num n1">1</span><span class="num n2">2</span><span class="num n3">3</span><span class="num n4">4</span><span class="num n5">5</span><span class="num n6">6</span><span class="num n7">7</span><span class="num n8">8</span><span class="num n9">9</span><span class="num n10">10</span><span class="num n11">11</span><span class="num n12">12</span>
+                        <div class="hand hour-hand" style="transform: rotate(50deg);"></div> <div class="hand minute-hand" style="transform: rotate(240deg);"></div> </div>
                 </div>
                 <div class="digital-input-group">
                     <input type="number" id="h3" placeholder="HH" required>
-                    <span style="font-weight: bold; font-size: 16pt;">:</span>
+                    <span style="font-weight: bold; font-size: 14pt;">:</span>
                     <input type="number" id="m3" placeholder="MM" required>
                 </div>
                 <div class="feed-msg" id="f3"></div>
             </div>
 
-
             <div class="challenge-block" id="block4">
-                <div class="challenge-text">4. El reloj digital marca <div class="digital-clock-display">10:15</div>. ¿Cuál de estos relojes analógicos indica esa misma hora?</div>
-                <div class="options-grid">
-                    <button type="button" class="option-btn" onclick="selectOpt(4, 'A', this)">
-                        <span>Opción A</span>
-                        <div class="analog-clock" style="transform: scale(0.6);">
-                            <div class="hand hour-hand" style="transform: rotate(307.5deg);"></div><div class="hand minute-hand" style="transform: rotate(90deg);"></div>
-                        </div>
-                    </button>
-                    <button type="button" class="option-btn" onclick="selectOpt(4, 'B', this)">
-                        <span>Opción B</span>
-                        <div class="analog-clock" style="transform: scale(0.6);">
-                            <div class="hand hour-hand" style="transform: rotate(90deg);"></div><div class="hand minute-hand" style="transform: rotate(60deg);"></div>
-                        </div>
-                    </button>
+                <div class="challenge-text">4. 🌌 Es muy tarde por la noche, casi medianoche. Escribe la hora en FORMATO DE 24 HORAS (Las doce menos diez de la noche):</div>
+                <div class="clock-wrapper">
+                    <div class="analog-clock">
+                        <span class="num n1">1</span><span class="num n2">2</span><span class="num n3">3</span><span class="num n4">4</span><span class="num n5">5</span><span class="num n6">6</span><span class="num n7">7</span><span class="num n8">8</span><span class="num n9">9</span><span class="num n10">10</span><span class="num n11">11</span><span class="num n12">12</span>
+                        <div class="hand hour-hand" style="transform: rotate(355deg);"></div> <div class="hand minute-hand" style="transform: rotate(300deg);"></div> </div>
                 </div>
-                <input type="hidden" id="ans4" required>
+                <div class="digital-input-group">
+                    <input type="number" id="h4" placeholder="HH" required>
+                    <span style="font-weight: bold; font-size: 14pt;">:</span>
+                    <input type="number" id="m4" placeholder="MM" required>
+                </div>
                 <div class="feed-msg" id="f4"></div>
             </div>
 
+
             <div class="challenge-block" id="block5">
-                <div class="challenge-text">5. El reloj digital marca una hora de la tarde: <div class="digital-clock-display">16:00</div>. ¿Cómo se vería en el de agujas?</div>
+                <div class="challenge-text">5. Buscamos el reloj analógico que marque exactamente las <div class="digital-clock-display">02:15</div></div>
                 <div class="options-grid">
                     <button type="button" class="option-btn" onclick="selectOpt(5, 'A', this)">
                         <span>Opción A</span>
-                        <div class="analog-clock" style="transform: scale(0.6);">
-                            <div class="hand hour-hand" style="transform: rotate(180deg);"></div><div class="hand minute-hand" style="transform: rotate(0deg);"></div>
+                        <div class="analog-clock" style="transform: scale(0.55); margin-right: -30px;">
+                            <span class="num n1">1</span><span class="num n3">3</span><span class="num n6">6</span><span class="num n9">9</span>
+                            <div class="hand hour-hand" style="transform: rotate(67.5deg);"></div> <div class="hand minute-hand" style="transform: rotate(90deg);"></div>
                         </div>
                     </button>
                     <button type="button" class="option-btn" onclick="selectOpt(5, 'B', this)">
                         <span>Opción B</span>
-                        <div class="analog-clock" style="transform: scale(0.6);">
-                            <div class="hand hour-hand" style="transform: rotate(120deg);"></div><div class="hand minute-hand" style="transform: rotate(0deg);"></div>
+                        <div class="analog-clock" style="transform: scale(0.55); margin-right: -30px;">
+                            <span class="num n1">1</span><span class="num n3">3</span><span class="num n6">6</span><span class="num n9">9</span>
+                            <div class="hand hour-hand" style="transform: rotate(90deg);"></div> <div class="hand minute-hand" style="transform: rotate(60deg);"></div>
                         </div>
                     </button>
                 </div>
@@ -347,18 +351,20 @@
             </div>
 
             <div class="challenge-block" id="block6">
-                <div class="challenge-text">6. Tu reloj inteligente marca las <div class="digital-clock-display">12:30</div> del mediodía. ¿Qué aguja representa esta hora?</div>
+                <div class="challenge-text">6. Tu tableta indica que son las <div class="digital-clock-display">18:30</div>. ¿Cuál es su equivalencia en agujas?</div>
                 <div class="options-grid">
                     <button type="button" class="option-btn" onclick="selectOpt(6, 'A', this)">
                         <span>Opción A</span>
-                        <div class="analog-clock" style="transform: scale(0.6);">
-                            <div class="hand hour-hand" style="transform: rotate(15deg);"></div><div class="hand minute-hand" style="transform: rotate(180deg);"></div>
+                        <div class="analog-clock" style="transform: scale(0.55); margin-right: -30px;">
+                            <span class="num n1">1</span><span class="num n3">3</span><span class="num n6">6</span><span class="num n9">9</span>
+                            <div class="hand hour-hand" style="transform: rotate(255deg);"></div> <div class="hand minute-hand" style="transform: rotate(180deg);"></div>
                         </div>
                     </button>
                     <button type="button" class="option-btn" onclick="selectOpt(6, 'B', this)">
                         <span>Opción B</span>
-                        <div class="analog-clock" style="transform: scale(0.6);">
-                            <div class="hand hour-hand" style="transform: rotate(195deg);"></div><div class="hand minute-hand" style="transform: rotate(180deg);"></div>
+                        <div class="analog-clock" style="transform: scale(0.55); margin-right: -30px;">
+                            <span class="num n1">1</span><span class="num n3">3</span><span class="num n6">6</span><span class="num n9">9</span>
+                            <div class="hand hour-hand" style="transform: rotate(195deg);"></div> <div class="hand minute-hand" style="transform: rotate(180deg);"></div>
                         </div>
                     </button>
                 </div>
@@ -366,27 +372,65 @@
                 <div class="feed-msg" id="f6"></div>
             </div>
 
-            <button type="submit" class="btn-check">🎯 Corregir mis soluciones</button>
+            <div class="challenge-block" id="block7">
+                <div class="challenge-text">7. El cronómetro digital marca las <div class="digital-clock-display">09:05</div>. ¿Qué esfera es la correcta?</div>
+                <div class="options-grid">
+                    <button type="button" class="option-btn" onclick="selectOpt(7, 'A', this)">
+                        <span>Opción A</span>
+                        <div class="analog-clock" style="transform: scale(0.55); margin-right: -30px;">
+                            <span class="num n1">1</span><span class="num n3">3</span><span class="num n6">6</span><span class="num n9">9</span>
+                            <div class="hand hour-hand" style="transform: rotate(272.5deg);"></div> <div class="hand minute-hand" style="transform: rotate(30deg);"></div>
+                        </div>
+                    </button>
+                    <button type="button" class="option-btn" onclick="selectOpt(7, 'B', this)">
+                        <span>Opción B</span>
+                        <div class="analog-clock" style="transform: scale(0.55); margin-right: -30px;">
+                            <span class="num n1">1</span><span class="num n3">3</span><span class="num n6">6</span><span class="num n9">9</span>
+                            <div class="hand hour-hand" style="transform: rotate(15deg);"></div> <div class="hand minute-hand" style="transform: rotate(270deg);"></div>
+                        </div>
+                    </button>
+                </div>
+                <input type="hidden" id="ans7" required>
+                <div class="feed-msg" id="f7"></div>
+            </div>
+
+            <div class="challenge-block" id="block8">
+                <div class="challenge-text">8. El cartel luminoso de la calle indica que son las <div class="digital-clock-display">21:15</div>. Elige el reloj analógico:</div>
+                <div class="options-grid">
+                    <button type="button" class="option-btn" onclick="selectOpt(8, 'A', this)">
+                        <span>Opción A</span>
+                        <div class="analog-clock" style="transform: scale(0.55); margin-right: -30px;">
+                            <span class="num n1">1</span><span class="num n3">3</span><span class="num n6">6</span><span class="num n9">9</span>
+                            <div class="hand hour-hand" style="transform: rotate(277.5deg);"></div> <div class="hand minute-hand" style="transform: rotate(90deg);"></div>
+                        </div>
+                    </button>
+                    <button type="button" class="option-btn" onclick="selectOpt(8, 'B', this)">
+                        <span>Opción B</span>
+                        <div class="analog-clock" style="transform: scale(0.55); margin-right: -30px;">
+                            <span class="num n1">1</span><span class="num n3">3</span><span class="num n6">6</span><span class="num n9">9</span>
+                            <div class="hand hour-hand" style="transform: rotate(337.5deg);"></div> <div class="hand minute-hand" style="transform: rotate(90deg);"></div>
+                        </div>
+                    </button>
+                </div>
+                <input type="hidden" id="ans8" required>
+                <div class="feed-msg" id="f8"></div>
+            </div>
+
+            <button type="submit" class="btn-check">🎯 Corregir todo el taller</button>
         </form>
 
         <div class="score-board" id="scorePanel">
-            <h4 style="font-size: 14pt;">汇 Registro del Taller</h4>
-            <div style="font-size: 26pt; font-weight: 800; color: #c084fc; margin: 8px 0;" id="scoreVal">0 / 6</div>
+            <h4 style="font-size: 14pt;">📊 Calificación Global del Taller</h4>
+            <div style="font-size: 26pt; font-weight: 800; color: #c084fc; margin: 8px 0;" id="scoreVal">0 / 8</div>
             <p id="scoreMsg" style="font-size: 10.5pt; opacity: 0.9;"></p>
         </div>
     </div>
 
     <script>
-        // Manejar la selección de botones tipo test
-        function selectOpt(questionNum, val, element) {
-            document.getElementById('ans' + questionNum).value = val;
-            
-            // Quitar clase seleccionada a los hermanos
-            const parent = element.parentElement;
-            const buttons = parent.querySelectorAll('.option-btn');
+        function selectOpt(qNum, val, element) {
+            document.getElementById('ans' + qNum).value = val;
+            const buttons = element.parentElement.querySelectorAll('.option-btn');
             buttons.forEach(btn => btn.classList.remove('selected'));
-            
-            // Añadir clase al seleccionado
             element.classList.add('selected');
         }
 
@@ -394,68 +438,70 @@
             event.preventDefault();
             let points = 0;
 
-            // P1: 8:00 o 08:00
-            const h1 = parseInt(document.getElementById("h1").value);
-            const m1 = parseInt(document.getElementById("m1").value);
-            const b1 = document.getElementById("block1");
-            const f1 = document.getElementById("f1");
+            // P1: 07:20
+            const h1 = parseInt(document.getElementById("h1").value); const m1 = parseInt(document.getElementById("m1").value);
+            const b1 = document.getElementById("block1"); const f1 = document.getElementById("f1");
             b1.classList.remove("correct", "incorrect");
-            if (h1 === 8 && m1 === 0) { points++; b1.classList.add("correct"); f1.innerText = "✅ ¡Perfecto! Son las 08:00 de la mañana."; }
-            else { b1.classList.add("incorrect"); f1.innerText = "❌ Incorrecto. Mira la aguja corta en el 8 y la larga en el 12 (en punto)."; }
+            if (h1 === 7 && m1 === 20) { points++; b1.classList.add("correct"); f1.innerText = "✅ ¡Exacto! Son las 07:20 de la mañana."; }
+            else { b1.classList.add("incorrect"); f1.innerText = "❌ Incorrecto. La aguja corta pasó el 7 y la larga está fija en el 4 (4 x 5 = 20 minutos)."; }
 
-            // P2: 15:30 (Formato 24h obligado por contexto "Tarde")
-            const h2 = parseInt(document.getElementById("h2").value);
-            const m2 = parseInt(document.getElementById("m2").value);
-            const b2 = document.getElementById("block2");
-            const f2 = document.getElementById("f2");
+            // P2: 16:05
+            const h2 = parseInt(document.getElementById("h2").value); const m2 = parseInt(document.getElementById("m2").value);
+            const b2 = document.getElementById("block2"); const f2 = document.getElementById("f2");
             b2.classList.remove("correct", "incorrect");
-            if (h2 === 15 && m2 === 30) { points++; b2.classList.add("correct"); f2.innerText = "✅ ¡Excelente! Como es por la tarde, las 3 se transforman en 15 (3 + 12 = 15). Las 15:30."; }
-            else { b2.classList.add("incorrect"); f2.innerText = "❌ Incorrecto. Al ser por la tarde en formato de 24 horas, debes sumar 12 a las 3 de las agujas."; }
+            if (h2 === 16 && m2 === 5) { points++; b2.classList.add("correct"); f2.innerText = "✅ ¡Perfecto! Las 4 de la tarde en formato de 24h son las 16:00, más los 5 minutos del número 1: 16:05."; }
+            else { b2.classList.add("incorrect"); f2.innerText = "❌ Incorrecto. Recuerda sumarle 12 a las 4 de la tarde (12 + 4 = 16) y los minutos deben marcar 05."; }
 
-            // P3: 20:45 (Las 9 menos cuarto son las 8 y 45 minutos de la noche)
-            const h3 = parseInt(document.getElementById("h3").value);
-            const m3 = parseInt(document.getElementById("m3").value);
-            const b3 = document.getElementById("block3");
-            const f3 = document.getElementById("f3");
+            // P3: 13:40
+            const h3 = parseInt(document.getElementById("h3").value); const m3 = parseInt(document.getElementById("m3").value);
+            const b3 = document.getElementById("block3"); const f3 = document.getElementById("f3");
             b3.classList.remove("correct", "incorrect");
-            if (h3 === 20 && m3 === 45) { points++; b3.classList.add("correct"); f3.innerText = "✅ ¡Eres un genio! Las 9 menos cuarto significa que son las 8:45 de la noche, lo que en formato de 24 horas equivale a las 20:45."; }
-            else { b3.classList.add("incorrect"); f3.innerText = "❌ Incorrecto. Recuerda que 'menos cuarto' significa que ha pasado de las 8h y marca 45 minutos. En la noche: 20:45."; }
+            if (h3 === 13 && m3 === 40) { points++; b3.classList.add("correct"); f3.innerText = "✅ ¡Excelente! Las dos menos veinte significa que todavía es la 1. Como marca el número 8 en los minutos, son las 13:40."; }
+            else { b3.classList.add("incorrect"); f3.innerText = "❌ Incorrecto. Si falta para las dos, es que todavía estamos en la hora 13. El minutero en el 8 representa 40 minutos."; }
 
-            // P4: Opción A
-            const ans4 = document.getElementById("ans4").value;
+            // P4: 23:50
+            const h4 = parseInt(document.getElementById("h4").value); const m4 = parseInt(document.getElementById("m4").value);
             const b4 = document.getElementById("block4"); const f4 = document.getElementById("f4");
             b4.classList.remove("correct", "incorrect");
-            if (ans4 === 'A') { points++; b4.classList.add("correct"); f4.innerText = "✅ ¡Muy bien! La opción A muestra la aguja corta en el 10 y el minutero en el 3 (15 minutos)."; }
-            else { b4.classList.add("incorrect"); f4.innerText = "❌ Incorrecto. Fíjate que los 15 minutos ('y cuarto') se representan con la aguja larga apuntando al número 3."; }
+            if (h4 === 23 && m4 === 50) { points++; b4.classList.add("correct"); f4.innerText = "✅ ¡Fantástico! Las doce menos diez implica que son las 23:50 de la noche."; }
+            else { b4.classList.add("incorrect"); f4.innerText = "❌ Incorrecto. Falta poco para las 24:00, por lo tanto la hora digital correcta es 23 y los minutos son 50."; }
 
-            // P5: Opción B
+            // P5: Opción A
             const ans5 = document.getElementById("ans5").value;
             const b5 = document.getElementById("block5"); const f5 = document.getElementById("f5");
             b5.classList.remove("correct", "incorrect");
-            if (ans5 === 'B') { points++; b5.classList.add("correct"); f5.innerText = "✅ ¡Así se hace! Las 16:00 equivale a las 4 en punto de la tarde (16 - 12 = 4)."; }
-            else { b5.classList.add("incorrect"); f5.innerText = "❌ Incorrecto. Las 16:00 son las 4 de la tarde. La aguja corta debe apuntar al 4."; }
+            if (ans5 === 'A') { points++; b5.classList.add("correct"); f5.innerText = "✅ ¡Correcto! La opción A sitúa las agujas en las 2 y cuarto (15 minutos)."; }
+            else { b5.classList.add("incorrect"); f5.innerText = "❌ Incorrecto. Fíjate bien en qué número se sitúa el minutero para marcar 15 minutos."; }
 
-            // P6: Opción A
+            // P6: Opción B
             const ans6 = document.getElementById("ans6").value;
             const b6 = document.getElementById("block6"); const f6 = document.getElementById("f6");
             b6.classList.remove("correct", "incorrect");
-            if (ans6 === 'A') { points++; b6.classList.add("correct"); f6.innerText = "✅ ¡Reto completado! Las 12:30 sitúa la aguja horaria pasando ligeramente el 12 y los minutos en el 6."; }
-            else { b6.classList.add("incorrect"); f6.innerText = "❌ Incorrecto. En las 12:30 la aguja de las horas se sitúa entre el 12 y el 1, no abajo en el 6."; }
+            if (ans6 === 'B') { points++; b6.classList.add("correct"); f6.innerText = "✅ ¡Muy bien pensado! Las 18:30 se traduce en las 6 y media de la tarde."; }
+            else { b6.classList.add("incorrect"); f6.innerText = "❌ Incorrecto. Réstale 12 a las 18 horas para saber qué número debe marcar la aguja corta."; }
 
-            // Panel de control final
-            const panel = document.getElementById("scorePanel");
-            panel.style.display = "block";
-            document.getElementById("scoreVal").innerText = points + " / 6";
+            // P7: Opción A
+            const ans7 = document.getElementById("ans7").value;
+            const b7 = document.getElementById("block7"); const f7 = document.getElementById("f7");
+            b7.classList.remove("correct", "incorrect");
+            if (ans7 === 'A') { points++; b7.classList.add("correct"); f7.innerText = "✅ ¡Magnífico! El minutero en el número 1 equivale a 5 minutos exactos."; }
+            else { b7.classList.add("incorrect"); f7.innerText = "❌ Incorrecto. La opción B marcaría las 12:45, no las 9 y cinco."; }
+
+            // P8: Opción A
+            const ans8 = document.getElementById("ans8").value;
+            const b8 = document.getElementById("block8"); const f8 = document.getElementById("f8");
+            b8.classList.remove("correct", "incorrect");
+            if (ans8 === 'A') { points++; b8.classList.add("correct"); f8.innerText = "✅ ¡Espectacular! Las 21:15 corresponde a las 9 y cuarto de la noche en formato de agujas."; }
+            else { b8.classList.add("incorrect"); f8.innerText = "❌ Incorrecto. Las 21 representan las 9 de la noche. La aguja de las horas debe marcar el 9."; }
+
+            // Mostrar Panel Final
+            const panel = document.getElementById("scorePanel"); panel.style.display = "block";
+            document.getElementById("scoreVal").innerText = points + " / 8";
             
             const msgBox = document.getElementById("scoreMsg");
-            if (points === 6) {
-                msgBox.innerText = "¡Increíble! Dominas tanto las agujas como los dígitos a la perfección. ¡Puntuación ideal! 🏆⌚";
-            } else if (points >= 4) {
-                msgBox.innerText = "¡Buen trabajo! Tienes un gran dominio de los formatos. Repasa las respuestas erróneas para perfeccionar el formato de 24 horas.";
-            } else {
-                msgBox.innerText = "¡Sigue practicando! Al principio pasar a formato de tarde (sumando 12) cuesta un poco, pero seguro que la próxima vez lo consigues.";
-            }
-
+            if (points === 8) { msgBox.innerText = "¡Nivel maestro! Tienes una visión espacial perfecta y controlas el sistema sexagesimal de los relojes de arriba a abajo. 🏆✨"; }
+            else if (points >= 5) { msgBox.innerText = "¡Un resultado fantástico! Has resuelto la mayoría de los relojes complejos. Revisa los fallos de tramos 'menos algo'."; }
+            else { msgBox.innerText = "¡Ánimo! Leer relojes con esferas detalladas requiere práctica. Fíjate bien en la aguja corta y vuelve a intentarlo."; }
             panel.scrollIntoView({ behavior: 'smooth' });
         }
     </script>
