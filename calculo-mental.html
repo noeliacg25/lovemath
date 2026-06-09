@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gimnasio de Cálculo Mental - MatesEnRuta</title>
+    <style>
+        :root {
+            --bg-color: #f0f9ff; /* Azul cielo muy suave */
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --primary: #0284c7;    /* Azul deportivo */
+            --secondary: #38bdf8;
+            --correct: #10b981;
+            --incorrect: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        .header-nav {
+            background-color: var(--card-bg);
+            padding: 12px 15px;
+            border-bottom: 1px solid #bae6fd;
+            margin-bottom: 20px;
+        }
+
+        .btn-back {
+            font-size: 10pt;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #ffffff;
+            padding: 25px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(2, 132, 199, 0.15);
+        }
+
+        .hero-banner h1 { font-size: 18pt; margin-bottom: 6px; }
+        .hero-banner p { font-size: 10.5pt; opacity: 0.9; }
+
+        .dashboard {
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+            padding: 0 15px;
+        }
+
+        .setup-box {
+            background-color: var(--card-bg);
+            border: 2px solid #bae6fd;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .setup-box p {
+            font-size: 11pt;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-muted);
+        }
+
+        .category-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        @media (max-width: 480px) {
+            .category-buttons { grid-template-columns: 1fr; }
+        }
+
+        .btn-mode {
+            background-color: #f0f9ff;
+            border: 2px solid #0284c7;
+            color: #0284c7;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 10pt;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-mode:hover, .btn-mode.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .game-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            padding: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            display: none; /* Se activa al elegir categoría */
+        }
+
+        .game-card h3 {
+            color: var(--primary);
+            font-size: 13pt;
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 2px dashed #e2e8f0;
+            padding-bottom: 8px;
+        }
+
+        .operation-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .operation-text {
+            font-size: 14pt;
+            font-weight: bold;
+            font-family: monospace;
+        }
+
+        .operation-row input {
+            width: 90px;
+            padding: 8px;
+            font-size: 12pt;
+            text-align: center;
+            font-weight: bold;
+            border: 2px solid #cbd5e1;
+            border-radius: 6px;
+        }
+
+        .operation-row.correct { border-left: 6px solid var(--correct); background-color: #f0fdf4; }
+        .operation-row.incorrect { border-left: 6px solid var(--incorrect); background-color: #fef2f2; }
+
+        .btn-action {
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 12pt;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .btn-action:hover { background-color: #0369a1; }
+
+        .score-board {
+            display: none;
+            background-color: #1e293b;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-nav">
+        <a href="index.html" class="btn-back">← Volver al Menú Principal</a>
+    </div>
+
+    <div class="hero-banner">
+        <h1>⚡ El Gimnasio de Cálculo Mental</h1>
+        <p>¡Operaciones infinitas! Selecciona un entrenamiento para generar retos matemáticos al azar.</p>
+    </div>
+
+    <div class="dashboard">
+        
+        <div class="setup-box">
+            <p>🎯 Elige qué destreza quieres entrenar hoy:</p>
+            <div class="category-buttons">
+                <button class="btn-mode" onclick="startTraining('decenas', this)">🚀 Decenas y Centenas</button>
+                <button class="btn-mode" onclick="startTraining('dobles', this)">🎯 Dobles y Mitades</button>
+                <button class="btn-mode" onclick="startTraining('redondeo', this)">⚡ Trucos de Redondeo</button>
+                <button class="btn-mode" onclick="startTraining('divisiones', this)">🧠 Divisiones Directas</button>
+            </div>
+        </div>
+
+        <div class="game-card" id="gamePanel">
+            <h3 id="gameTitle">Categoría</h3>
+            
+            <form id="mentalForm" onsubmit="evaluateMental(event)">
+                <div id="questionsContainer"></div>
+                <button type="submit" class="btn-action" id="actionBtn">🎯 Comprobar Respuestas</button>
+            </form>
+
+            <div class="score-board" id="scorePanel">
+                <h4 style="font-size: 13pt;">📊 Rendimiento de tu Mente</h4>
+                <div style="font-size: 26pt; font-weight: 800; color: #38bdf8; margin: 8px 0;" id="scoreVal">0 / 5</div>
+                <p id="scoreMsg" style="font-size: 10.5pt; opacity: 0.9;"></p>
+                <button class="btn-action" style="background-color: #0284c7; margin-top: 15px;" onclick="refreshTanda()">🔄 Entrenar otra vez con números nuevos</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentMode = '';
+        let respuestasCorrectas = [];
+
+        function startTraining(mode, button) {
+            currentMode = mode;
+            
+            // Estilo activo en los botones
+            document.querySelectorAll('.btn-mode').forEach(b => b.classList.remove('active'));
+            button.classList.add('active');
+
+            // Mostrar el panel de juego
+            document.getElementById("gamePanel").style.display = "block";
+            document.getElementById("scorePanel").style.display = "none";
+            document.getElementById("actionBtn").style.display = "block";
+
+            generateQuestions(mode);
+        }
+
+        function refreshTanda() {
+            document.getElementById("scorePanel").style.display = "none";
+            document.getElementById("actionBtn").style.display = "block";
+            generateQuestions(currentMode);
+        }
+
+        function generateQuestions(mode) {
+            const container = document.getElementById("questionsContainer");
+            container.innerHTML = "";
+            respuestasCorrectas = [];
+            
+            let title = "";
+            if(mode === 'decenas') title = "🚀 Multiplicar por Decenas y Centenas completas";
+            if(mode === 'dobles') title = "🎯 Desafío de Dobles y Mitades";
+            if(mode === 'redondeo') title = "⚡ Estrategia de Redondeo (Aproximaciones)";
+            if(mode === 'divisiones') title = "🧠 Divisiones de Tablas Extendidas";
+            document.getElementById("gameTitle").innerText = title;
+
+            // Generar 5 operaciones aleatorias basadas en el modo matemático
+            for (let i = 0; i < 5; i++) {
+                let txtOp = "";
+                let sol = 0;
+
+                if (mode === 'decenas') {
+                    // Tipos: 40 x 20 o 120 x 2 o 300 x 5
+                    let tipo = Math.random() > 0.5;
+                    if(tipo) {
+                        let n1 = (Math.floor(Math.random() * 8) + 2) * 10; // 20 a 90
+                        let n2 = (Math.floor(Math.random() * 5) + 2) * 10; // 20 a 60
+                        txtOp = `${n1} &times; ${n2}`;
+                        sol = n1 * n2;
+                    } else {
+                        let n1 = (Math.floor(Math.random() * 15) + 2) * 10; // 20 a 160
+                        let n2 = Math.floor(Math.random() * 4) + 2; // 2 a 5
+                        txtOp = `${n1} &times; ${n2}`;
+                        sol = n1 * n2;
+                    }
+                } 
+                else if (mode === 'dobles') {
+                    let tipo = Math.random() > 0.5;
+                    if(tipo) {
+                        // Mitades de números con centenas o decenas pares/impares controladas
+                        let base = (Math.floor(Math.random() * 40) + 10) * 2; // 20 a 98 par
+                        txtOp = `La mitad de ${base}`;
+                        sol = base / 2;
+                    } else {
+                        let base = Math.floor(Math.random() * 85) + 15; // 15 a 99
+                        txtOp = `El doble de ${base}`;
+                        sol = base * 2;
+                    }
+                } 
+                else if (mode === 'redondeo') {
+                    let tipo = Math.random() > 0.5;
+                    if(tipo) {
+                        // Sumar números que terminan en 9 o 8 (Ej: 35 + 19)
+                        let n1 = Math.floor(Math.random() * 50) + 25;
+                        let n2 = (Math.floor(Math.random() * 4) + 1) * 10 - 1; // 9, 19, 29, 39...
+                        txtOp = `${n1} + ${n2}`;
+                        sol = n1 + n2;
+                    } else {
+                        // Restar números que terminan en 9 (Ej: 85 - 19)
+                        let n1 = Math.floor(Math.random() * 60) + 40;
+                        let n2 = (Math.floor(Math.random() * 3) + 1) * 10 - 1; // 9, 19, 29
+                        txtOp = `${n1} - ${n2}`;
+                        sol = n1 - n2;
+                    }
+                } 
+                else if (mode === 'divisiones') {
+                    // Tablas extendidas (Ej: 240 / 6)
+                    let t = Math.floor(Math.random() * 8) + 2; // Tabla del 2 al 9
+                    let mult = Math.floor(Math.random() * 8) + 2; // Multiplicador del 2 al 9
+                    let dividendo = (t * mult) * 10; // Ej: (3 * 4) * 10 = 120
+                    txtOp = `${dividendo} &div; ${t}`;
+                    sol = dividendo / t;
+                }
+
+                respuestasCorrectas.push(sol);
+
+                // Crear fila en la interfaz
+                container.innerHTML += `
+                    <div class="operation-row" id="row_${i}">
+                        <span class="operation-text">${txtOp} = </span>
+                        <input type="number" id="ans_${i}" required>
+                    </div>
+                `;
+            }
+        }
+
+        function evaluateMental(event) {
+            event.preventDefault();
+            let acertadas = 0;
+
+            for (let i = 0; i < 5; i++) {
+                const userAns = parseInt(document.getElementById(`ans_${i}`).value);
+                const row = document.getElementById(`row_${i}`);
+                
+                row.classList.remove("correct", "incorrect");
+
+                if (userAns === respuestasCorrectas[i]) {
+                    acertadas++;
+                    row.classList.add("correct");
+                } else {
+                    row.classList.add("incorrect");
+                }
+            }
+
+            // Mostrar resultados
+            const panel = document.getElementById("scorePanel");
+            panel.style.display = "block";
+            document.getElementById("actionBtn").style.display = "none";
+            document.getElementById("scoreVal").innerText = acertadas + " / 5";
+
+            const msgBox = document.getElementById("scoreMsg");
+            if(acertadas === 5) {
+                msgBox.innerText = "¡Velocidad de relámpago! Has resuelto la tanda con una precisión matemática perfecta. ⚡🏆";
+            } else if (acertadas >= 3) {
+                msgBox.innerText = "¡Buen trabajo! Tu agilidad mental está en forma. Revisa las celdas rojas para ver dónde falló la estrategia.";
+            } else {
+                msgBox.innerText = "¡Sigue entrenando! El cálculo mental mejora cuanto más lo intentas. Prueba otra vez.";
+            }
+
+            panel.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
